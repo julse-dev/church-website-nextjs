@@ -7,7 +7,7 @@ function ChurchLogo() {
   return (
     <div className="flex items-center">
       <Link href="/">
-        <Image src={ImageLinks.churchLogo} alt="Landscape picture" layout="intrinsic" width={150} height={50} />
+        <Image src={ImageLinks.churchLogo} alt="Landscape picture" width={150} height={50} />
       </Link>
     </div>
   );
