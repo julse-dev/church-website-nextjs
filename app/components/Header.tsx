@@ -22,7 +22,7 @@ function NavigationMenu() {
       <Link href="/about" className="hover:underline">
         교회소개
       </Link>
-      <Link href="/news" className="hover:underline">
+      <Link href="/news/church-news" className="hover:underline">
         교회소식
       </Link>
       <Link href="/resources" className="hover:underline">
