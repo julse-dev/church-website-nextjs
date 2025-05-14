@@ -1,4 +1,4 @@
-import ChurchNewsForm from "./ChurchNewsForm";
+import ChurchNewsForm from "@/app/components/ChurchNewsForm";
 
 export default function WritePostPage() {
   return (

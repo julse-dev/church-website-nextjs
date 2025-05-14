@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ChurchNewsForm() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: ``,
     content: ``,
@@ -31,6 +34,7 @@ export default function ChurchNewsForm() {
 
     if (response.ok) {
       alert(`게시글이 성공적으로 등록되었습니다.`);
+      router.push("/news/church-news");
     } else {
       const error = await response.json();
       console.log(error.message);
