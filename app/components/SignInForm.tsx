@@ -32,6 +32,7 @@ export default function SignInForm() {
 
       // 로그인 성공 시, 메인 페이지로 리다이렉트
       router.push("/");
+      router.refresh();
     } catch (err) {
       setError(`서버와 연결할 수 없습니다: ${err}`);
     }
