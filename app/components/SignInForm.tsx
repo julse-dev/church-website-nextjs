@@ -67,6 +67,13 @@ export default function SignInForm() {
       <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
         로그인
       </button>
+
+      <p className="mt-4 text-center">
+        계정이 없으신가요?{" "}
+        <a href="/register" className="text-blue-600 hover:underline">
+          회원가입
+        </a>
+      </p>
     </form>
   );
 }
