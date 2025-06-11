@@ -9,9 +9,6 @@ export default function ChurchNewsForm() {
   const [formData, setFormData] = useState({
     title: ``,
     content: ``,
-    author: `테스트 유저 2`,
-    userId: `2`,
-    createdAt: new Date().toISOString().split("T")[0],
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -25,10 +22,9 @@ export default function ChurchNewsForm() {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/church-news-boards/create`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({
         ...formData,
-        userId: parseInt(formData.userId),
-        createdAt: new Date().toISOString(),
       }),
     });
 
