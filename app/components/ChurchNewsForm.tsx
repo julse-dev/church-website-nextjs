@@ -33,7 +33,6 @@ export default function ChurchNewsForm() {
       router.push("/news/church-news");
     } else {
       const error = await response.json();
-      console.log(error.message);
       alert(`게시글 등록에 실패했습니다. 오류는: ${error.message}`);
     }
   };

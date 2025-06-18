@@ -25,7 +25,7 @@ export default function SignInForm() {
       });
 
       if (!response.ok) {
-        const err = await response.json();
+        const err = await response.json().catch(() => ({ message: "Login failed due to network or parsing error" }));
         setError(err.message || "Login failed");
         return;
       }
@@ -34,7 +34,11 @@ export default function SignInForm() {
       router.push("/");
       router.refresh();
     } catch (err) {
-      setError(`서버와 연결할 수 없습니다: ${err}`);
+      if (err instanceof Error) {
+        setError(`서버와 연결할 수 없습니다: ${err.message}`);
+      } else {
+        setError(`서버와 연결할 수 없습니다: ${String(err)}`);
+      }
     }
   };
 
