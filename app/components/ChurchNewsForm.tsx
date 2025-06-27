@@ -1,15 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-export default function ChurchNewsForm() {
+type Post = {
+  id: string;
+  title: string;
+  content: string;
+};
+
+interface ChurchNewsFormProps {
+  post?: Post;
+}
+
+export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
   const router = useRouter();
+  const isEditing = !!post;
 
   const [formData, setFormData] = useState({
-    title: ``,
-    content: ``,
+    title: post?.title || ``,
+    content: post?.content || ``,
   });
+
+  useEffect(() => {
+    if (post) {
+      setFormData({
+        title: post.title,
+        content: post.content,
+      });
+    }
+  }, [post]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -19,8 +39,14 @@ export default function ChurchNewsForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/church-news-boards/create`, {
-      method: "POST",
+    const url = isEditing
+      ? `${process.env.NEXT_PUBLIC_API_URL}/church-news-boards/${post?.id}`
+      : `${process.env.NEXT_PUBLIC_API_URL}/church-news-boards/create`;
+
+    const method = isEditing ? "PATCH" : "POST";
+
+    const response = await fetch(url, {
+      method,
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify({
@@ -29,8 +55,10 @@ export default function ChurchNewsForm() {
     });
 
     if (response.ok) {
-      alert(`게시글이 성공적으로 등록되었습니다.`);
-      router.push("/news/church-news");
+      alert(`게시글이 성공적으로 ${isEditing ? "수정" : "등록"}되었습니다.`);
+      const destination = isEditing ? `/news/church-news/${post.id}` : "/news/church-news";
+      router.push(destination);
+      router.refresh();
     } else {
       const error = await response.json();
       alert(`게시글 등록에 실패했습니다. 오류는: ${error.message}`);
