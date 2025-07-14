@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useRefreshAccessToken } from "../hooks/useRefreshAccessToken";
 
 type Post = {
   id: string;
@@ -16,6 +17,7 @@ interface ChurchNewsFormProps {
 export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
   const router = useRouter();
   const isEditing = !!post;
+  const { refresh } = useRefreshAccessToken();
 
   const [formData, setFormData] = useState({
     title: post?.title || ``,
@@ -38,6 +40,13 @@ export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const ok = await refresh();
+    if (!ok) {
+      alert("로그인이 필요합니다.");
+      router.push("/signin");
+      return;
+    }
 
     const url = isEditing
       ? `${process.env.NEXT_PUBLIC_API_URL}/church-news-boards/${post?.id}`
