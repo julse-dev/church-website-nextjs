@@ -1,12 +1,12 @@
-import { useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export function useRefreshAccessToken() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const callCount = useRef(0);
 
-  const refresh = async () => {
-    if (callCount.current >= 5) {
+  const refresh = useCallback(async () => {
+    if (callCount.current >= 1) {
       setError("인증 시도 횟수를 초과했습니다.");
       return false;
     }
@@ -37,7 +37,7 @@ export function useRefreshAccessToken() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return { refresh, loading, error };
 }

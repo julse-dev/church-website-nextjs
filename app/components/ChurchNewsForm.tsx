@@ -17,7 +17,7 @@ interface ChurchNewsFormProps {
 export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
   const router = useRouter();
   const isEditing = !!post;
-  const { refresh } = useRefreshAccessToken();
+  const { refresh, loading, error: refreshError } = useRefreshAccessToken();
 
   const [formData, setFormData] = useState({
     title: post?.title || ``,
@@ -43,8 +43,8 @@ export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
 
     const ok = await refresh();
     if (!ok) {
-      alert("로그인이 필요합니다.");
-      router.push("/signin");
+      alert(refreshError || "로그인이 필요합니다.");
+      if (refreshError) router.push("/signin");
       return;
     }
 
@@ -93,9 +93,10 @@ export default function ChurchNewsForm({ post }: ChurchNewsFormProps) {
         className="border p-2 w-full h-40"
         required
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-        게시글 등록
+      <button type="submit" disabled={loading} className="bg-blue-500 text-white p-2 rounded disabled:bg-gray-400">
+        {loading ? "처리 중..." : isEditing ? "게시글 수정" : "게시글 등록"}
       </button>
+      {refreshError && <p className="text-red-500">{refreshError}</p>}
     </form>
   );
 }
