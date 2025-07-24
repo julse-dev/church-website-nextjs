@@ -6,9 +6,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper Styles
 import "swiper/css";
 import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 // Import required modules
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 import "../styles/swiper-slider.css";
 
@@ -25,37 +26,43 @@ function ChurchBanner() {
         bulletActiveClass: "swiper-pagination-bullet-active",
         bulletClass: "swiper-pagination-bullet",
       }}
-      modules={[Autoplay, Pagination]}
+      modules={[Autoplay, Pagination, Navigation]}
       slidesPerView={1}
-      className="churchBanner"
+      navigation
+      className="churchBanner relative"
     >
       <SwiperSlide>
-        {/* <img src="/image/church-logo-01.jpeg" alt="Church Logo 1" className="w-full h-auto" /> */}
-        <Image
-          src="/image/church-logo-01.jpeg"
-          alt="Church Logo 1"
-          width={500}
-          height={300}
-          className="w-full h-auto"
-        />
+        <div className="flex justify-center items-center">
+          <Image
+            src="/image/church-logo-01.jpeg"
+            alt="Church Logo 1"
+            width={600}
+            height={300}
+            className="max-w-[600px] w-full h-auto mx-4 rounded-lg shadow"
+          />
+        </div>
       </SwiperSlide>
       <SwiperSlide>
-        <Image
-          src={"/image/church-logo-02.jpeg"}
-          alt="Church Logo 2"
-          width={500}
-          height={300}
-          className="w-full h-auto"
-        />
+        <div className="flex justify-center items-center">
+          <Image
+            src={"/image/church-logo-02.jpeg"}
+            alt="Church Logo 2"
+            width={600}
+            height={300}
+            className="max-w-[600px] w-full h-auto mx-4 rounded-lg shadow"
+          />
+        </div>
       </SwiperSlide>
       <SwiperSlide>
-        <Image
-          src={"/image/church-logo-03.png"}
-          alt="Church Logo 3"
-          width={500}
-          height={300}
-          className="w-full h-auto"
-        />
+        <div className="flex justify-center items-center">
+          <Image
+            src={"/image/church-logo-03.png"}
+            alt="Church Logo 3"
+            width={600}
+            height={300}
+            className="max-w-[600px] w-full h-auto mx-4 rounded-lg shadow"
+          />
+        </div>
       </SwiperSlide>
     </Swiper>
   );
