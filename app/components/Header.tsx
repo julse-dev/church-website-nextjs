@@ -5,6 +5,7 @@ import { ImageLinks } from "../lib/links";
 import { cookies } from "next/headers";
 import SignOutButton from "./SignOutButton";
 import SignInButton from "./SignInButton";
+import MyPageButton from "./MyPageButton";
 
 function ChurchLogo() {
   return (
@@ -40,11 +41,18 @@ export default async function Header() {
   const accessToken = (await cookies()).get(cookieName);
   const isLoggedIn = !!accessToken;
 
-  const AuthButton = isLoggedIn ? <SignOutButton /> : <SignInButton />;
+  const AuthSection = isLoggedIn ? (
+    <div className="flex items-center">
+      <MyPageButton />
+      <SignOutButton />
+    </div>
+  ) : (
+    <SignInButton />
+  );
 
   return (
     <header className="flex flex-col justify-between p-4 bg-violet-200 text-white">
-      <div className="flex justify-end w-full text-sm pb-2">{AuthButton}</div>
+      <div className="flex justify-end w-full text-sm pb-2">{AuthSection}</div>
       <div className="flex flex-row justify-between items-start w-full">
         <div className="flex items-center">
           <ChurchLogo />
