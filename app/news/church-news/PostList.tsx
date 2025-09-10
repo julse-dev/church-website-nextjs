@@ -40,16 +40,20 @@ export default function PostList() {
   return (
     <div>
       <ul className="space-y-4">
-        {posts.map((post) => (
-          <li key={post.id} className="border-b pb-2">
-            <Link href={`/news/church-news/${post.id}`} className="text-lg font-semibold text-blue-600 hover:underline">
-              {post.title}
-            </Link>
-            <div className="text-sm text-gray-600">
-              {post.author} | {new Date(post.createdAt).toLocaleDateString()}
-            </div>
-          </li>
-        ))}
+        {posts &&
+          posts.map((post) => (
+            <li key={post.id} className="border-b pb-2">
+              <Link
+                href={`/news/church-news/${post.id}`}
+                className="text-lg font-semibold text-blue-600 hover:underline"
+              >
+                {post.title}
+              </Link>
+              <div className="text-sm text-gray-600">
+                {post.author} | {new Date(post.createdAt).toLocaleDateString()}
+              </div>
+            </li>
+          ))}
       </ul>
       <div className="flex justify-center mt-6 space-x-2">
         <button
@@ -59,7 +63,9 @@ export default function PostList() {
         >
           이전
         </button>
-        <span className="px-3 py-1">{currentPage} / {totalPages}</span>
+        <span className="px-3 py-1">
+          {currentPage} / {totalPages}
+        </span>
         <button
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           disabled={currentPage === totalPages}
